@@ -1,0 +1,33 @@
+<sly>
+  <sly data-sly-use.clientlib="/libs/granite/sightly/templates/clientlib.html"
+    data-sly-call="${clientlib.all @ categories='aemchatbot'}" />
+  <div class="my-chatbot">
+      <button class="chatbot-toggler" >
+      <span class="material-symbols-rounded">mode_comment</span>
+      <span class="material-symbols-outlined">close</span>
+    </button>
+      <div class="chatbot">
+        <header>
+          <h2>AEM Chatbot</h2>
+          <span class="close-btn material-symbols-outlined">close</span>
+        </header>
+        <ul class="chatbox">
+          <li class="chat incoming">
+            <span class="material-symbols-outlined">smart_toy</span>
+            <p>Hi there 👋<br>I'm Lisa here<br>How can I help you today?</p>
+          </li>
+          <li class="chat suggested-messages">
+            <button class="suggested-message">Create a Page</button>
+            <button class="suggested-message">Click</button>
+            <button class="suggested-message">Suggested message 3</button>
+          </li>
+        </ul>
+        <div class="chat-input">
+          <form id="myForm"> 
+          <textarea id="msg" class="txt" placeholder="Enter a message..." spellcheck="false" name="message" ></textarea>
+          <span id="send-btn" class="material-symbols-rounded" type="submit">send</span>
+          </form>
+        </div>
+      </div>
+  </div>
+</sly>

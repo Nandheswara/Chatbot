@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/conf/chatbot" mode="merge"/>
+    <filter root="/content/chatbot" mode="merge"/>
+    <filter root="/content/dam/chatbot" mode="merge">
+        <exclude pattern="/content/dam/chatbot(/.*)?"/>
+        <include pattern="/content/dam/chatbot/jcr:content(/.*)?"/>
+    </filter>
+    <filter root="/content/dam/chatbot/asset.jpg" mode="merge"/>
+    <filter root="/content/experience-fragments/chatbot" mode="merge"/>
+</workspaceFilter>

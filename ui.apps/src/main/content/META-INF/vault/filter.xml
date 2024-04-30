@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<workspaceFilter version="1.0">
+    <filter root="/apps/chatbot/clientlibs"/>
+    <filter root="/apps/chatbot/components"/>
+    <filter root="/apps/chatbot/i18n"/>
+    <filter root="/apps/msm/chatbot_blueprint" mode="merge"/>
+</workspaceFilter>
