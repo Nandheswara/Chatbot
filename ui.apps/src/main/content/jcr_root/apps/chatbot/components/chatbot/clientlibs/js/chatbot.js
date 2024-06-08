@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
     // Select elements once the page is loaded
     const chatbotToggler = document.querySelector(".chatbot-toggler");
     const closeBtn = document.querySelector(".close-btn");
@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
         return chatLi; // return chat <li> element
     }
 
-    // const generateResponse = (chatElement) => {
+    //     const generateResponse = (chatElement) => {
     //     const API_URL = "https://api.openai.com/v1/chat/completions";
     //     const messageElement = chatElement.querySelector("p");
 
@@ -50,25 +50,58 @@ document.addEventListener("DOMContentLoaded", function () {
     // }
 
     const handleChat = () => {
-        userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
-        if (!userMessage) return;
+    userMessage = chatInput.value.trim(); // Get user entered message and remove extra whitespace
+    if (!userMessage) return;
 
-        // Clear the input textarea and set its height to default
-        chatInput.value = "";
-        chatInput.style.height = `${inputInitHeight}px`;
+    // Clear the input textarea and set its height to default
+    chatInput.value = "";
+    chatInput.style.height = `${inputInitHeight}px`;
 
-        // Append the user's message to the chatbox
-        chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+    // Append the user's message to the chatbox
+    chatbox.appendChild(createChatLi(userMessage, "outgoing"));
+    chatbox.scrollTo(0, chatbox.scrollHeight);
+
+
+
+    setTimeout(() => {
+        // Display "Thinking..." message while waiting for the response
+        const incomingChatLi = createChatLi("Thinking...", "incoming");
+        chatbox.appendChild(incomingChatLi);
         chatbox.scrollTo(0, chatbox.scrollHeight);
+        // generateResponse(incomingChatLi);
+        $.ajax({
+            url: "/bin/inputmessage",
+            type: "GET",
+            dataType: "json",
+            success: function (data) {
+                if (data != null) {
+                    console.log(data);
+                    const chatLi = document.createElement("li");
+                    //chatLi.classList.add("chat", `${className}`);
+                    // Iterate over the keys in the data object
+                    let newButton;
+                    for (let key in data) {
+                        // Create a new button with the text from the AJAX call
+                        let newButton = $('<button class="suggested-message">' + data[key] + '</button>');
+                        // Append the new button to the list
+                        //$('.chat.suggested-messages').append(newButton);
+                       //$('.chatbox .incoming:last-child').append(newButton);
+                       $('<li class="chat suggested-messages"> </li>').insertAfter('.chatbox .incoming:last-child');
+                       $('.chatbox .suggested-messages:last-child').append(newButton);
+                    }
+                    chatbox.scrollTo(0, chatbox.scrollHeight);
+                     const incomingChatLi = createChatLi(newButton, "incoming");
+                        chatbox.appendChild(incomingChatLi);
+                        chatbox.scrollTo(0, chatbox.scrollHeight);
+                }
+            },
+            error: function () {
+                console.log("Error getting the data");
+            }
+        });
+    }, 600);
+}
 
-        setTimeout(() => {
-            // Display "Thinking..." message while waiting for the response
-            const incomingChatLi = createChatLi("Thinking...", "incoming");
-            chatbox.appendChild(incomingChatLi);
-            chatbox.scrollTo(0, chatbox.scrollHeight);
-            // generateResponse(incomingChatLi);
-        }, 600);
-    }
 
     chatInput.addEventListener("input", () => {
         // Adjust the height of the input textarea based on its content
@@ -91,7 +124,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // To toggle the class
     chatbotToggler.addEventListener("click", () => document.querySelector(".my-chatbot").classList.toggle("show-chatbot"));
-
 
 });
 

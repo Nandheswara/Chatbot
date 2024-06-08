@@ -1,8 +1,6 @@
 $(document).ready(function () {
     const chatInput = document.querySelector(".chat-input textarea");
 
-    const suggestedMessageButtons = document.querySelectorAll(".suggested-message");
-
     document.getElementById('send-btn').addEventListener('click', function (event) {
         sendmsg(event);
     });
@@ -14,11 +12,19 @@ $(document).ready(function () {
         }
     });
 
-    suggestedMessageButtons.forEach(function (messageButton) {
-        messageButton.addEventListener('click', function () {
-            chatInput.value = this.textContent;
+    // // Use event delegation for suggested-message buttons
+    // document.querySelector('.chat.suggested-messages').addEventListener('click', function (event) {
+    //     if (event.target.matches('.suggested-message')) {
+    //         chatInput.value = event.target.textContent;
+    //         document.getElementById('send-btn').click();
+    //     }
+    // });
+    // Click event for dynamic added buttons
+    $(document).on("click", ".chat.suggested-messages" , function() {
+        if (event.target.matches('.suggested-message')) {
+            chatInput.value = event.target.textContent;
             document.getElementById('send-btn').click();
-        });
+        }
     });
 
     console.log("ready!");
@@ -36,6 +42,7 @@ $(document).ready(function () {
             contentType: false,
             success: function (response) {
                 console.log(response)
+                //showSuggestionMessage();
             },
             error: function (xhr, status, error) {
                 alert('Your form was not sent successfully.');
@@ -43,4 +50,27 @@ $(document).ready(function () {
             }
         });
     }
+
+ 
+    $.ajax({
+        url: "/bin/inputmessage",
+        type: "GET",
+        dataType: "json",
+        success: function (data) {
+            if (data != null) {
+                console.log(data);
+                // Iterate over the keys in the data object
+                for (let key in data) {
+                    // Create a new button with the text from the AJAX call
+                    let newButton = $('<button class="suggested-message">' + data[key] + '</button>');
+                    // Append the new button to the list
+                    $('.chat.suggested-messages').append(newButton);
+                }
+            }
+        },
+        error: function () {
+            console.log("Error getting the data");
+        }
+    });
+
 });

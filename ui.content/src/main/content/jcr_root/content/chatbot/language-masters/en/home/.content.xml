@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jcr:root xmlns:jcr="http://www.jcp.org/jcr/1.0" xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:cq="http://www.day.com/jcr/cq/1.0" xmlns:sling="http://sling.apache.org/jcr/sling/1.0"
+    jcr:primaryType="cq:Page">
+    <jcr:content
+        cq:lastModified="{Date}2024-04-25T14:15:19.139+05:30"
+        cq:lastModifiedBy="admin"
+        cq:template="/conf/chatbot/settings/wcm/templates/page-content"
+        jcr:primaryType="cq:PageContent"
+        jcr:title="Home"
+        sling:resourceType="chatbot/components/page">
+        <root
+            jcr:primaryType="nt:unstructured"
+            sling:resourceType="chatbot/components/container"
+            layout="responsiveGrid">
+            <container
+                jcr:primaryType="nt:unstructured"
+                sling:resourceType="chatbot/components/container"
+                layout="responsiveGrid">
+                <title
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="chatbot/components/title"/>
+                <container
+                    jcr:primaryType="nt:unstructured"
+                    sling:resourceType="chatbot/components/container"
+                    layout="responsiveGrid">
+                    <chatbot
+                        jcr:lastModified="{Date}2024-04-25T14:15:19.136+05:30"
+                        jcr:lastModifiedBy="admin"
+                        jcr:primaryType="nt:unstructured"
+                        sling:resourceType="chatbot/components/chatbot"
+                        chatbot="path"
+                        message="Create a Page"/>
+                </container>
+            </container>
+        </root>
+    </jcr:content>
+</jcr:root>
